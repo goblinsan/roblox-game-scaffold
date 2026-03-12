@@ -1,0 +1,25 @@
+# Selene – Luau static analyser configuration
+#
+# Enforces clean-code and DRY principles across all .lua/.luau source files.
+# Run  `selene .` to analyse the whole project.
+#
+# std:
+#   roblox  – Selene's built-in Roblox standard library, which bundles all
+#             Lua 5.1 globals plus every Roblox engine API (game, workspace,
+#             Instance, task, Vector3, Enum, etc.).  Using the built-in avoids
+#             the need for a separate roblox.yml custom stdlib definition and
+#             prevents false-positive "undefined global" warnings.
+#
+# Lint rules (severity: "deny" | "warn" | "allow"):
+#   unused_variable  – dead code; DRY principle (remove or use the symbol)
+#   shadowing        – clean code; reusing a name hides the outer binding
+#   empty_if         – clean code; empty branch bodies serve no purpose
+#   must_use         – clean code; ignoring an annotated return value is a bug
+
+std = "roblox"
+
+[lints]
+unused_variable = "warn"
+shadowing       = "warn"
+empty_if        = "warn"
+must_use        = "warn"

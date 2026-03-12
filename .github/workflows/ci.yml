@@ -1,7 +1,12 @@
-# CI smoke test: Wally install + Rojo build
+# CI: code-style lint + Wally install + Rojo build
 #
 # Runs on every push to main and on every pull request to catch broken
-# scaffold changes before they land.
+# scaffold changes and code-quality regressions before they land.
+#
+# Jobs
+# ────
+#   lint   – StyLua formatting check + Selene static analysis (runs in parallel)
+#   build  – Wally install + Rojo build for every game and the scaffold root
 
 name: CI
 
@@ -11,6 +16,34 @@ on:
   pull_request:
 
 jobs:
+  # ── Coding-guidelines enforcement ────────────────────────────────────────
+  lint:
+    name: Lint (StyLua + Selene)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # selene and stylua are pinned in aftman.toml alongside rojo/wally
+      - name: Set up aftman toolchain
+        uses: ok-nick/setup-aftman@v0.4.2
+
+      # Verify that every .lua/.luau file matches the StyLua style rules
+      # defined in stylua.toml (column width, indent, quote style, etc.).
+      # Developers can auto-fix locally with: stylua .
+      - name: Check formatting (StyLua)
+        run: stylua --check --color auto .
+
+      # Run Selene static analysis (clean code, unused variables, shadowing,
+      # empty blocks).  Config lives in selene.toml; Roblox globals are
+      # declared in roblox.yml so engine APIs do not produce false positives.
+      - name: Static analysis (Selene)
+        run: selene .
+
+  # ── Build smoke test ──────────────────────────────────────────────────────
   build:
     name: Wally install + Rojo build
     runs-on: ubuntu-latest

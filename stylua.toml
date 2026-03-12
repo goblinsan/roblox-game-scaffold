@@ -1,0 +1,19 @@
+# StyLua – Luau code formatter configuration
+#
+# Enforces a consistent code style across all .lua/.luau source files.
+# Run  `stylua .`         to auto-format.
+# Run  `stylua --check .` to verify formatting without making changes (CI).
+#
+# Guidelines enforced:
+#   • Consistent indentation (4 spaces)
+#   • Maximum line length of 120 columns – keeps functions and class bodies
+#     readable and prevents excessively wide code blocks.
+#   • Double-quoted strings (AutoPreferDouble falls back to single quotes
+#     only when the string itself contains a double-quote character).
+#   • Explicit call parentheses for clarity.
+
+column_width    = 120
+indent_type     = "Spaces"
+indent_width    = 4
+quote_style     = "AutoPreferDouble"
+call_parentheses = "Always"
