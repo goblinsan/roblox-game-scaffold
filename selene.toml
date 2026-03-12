@@ -4,9 +4,11 @@
 # Run  `selene .` to analyse the whole project.
 #
 # std:
-#   lua51   – baseline Lua 5.1 globals (the Luau runtime is Lua 5.1-compatible)
-#   roblox  – Roblox-engine globals defined in roblox.yml (prevents false
-#             positives for game, workspace, Instance, etc.)
+#   roblox  – Selene's built-in Roblox standard library, which bundles all
+#             Lua 5.1 globals plus every Roblox engine API (game, workspace,
+#             Instance, task, Vector3, Enum, etc.).  Using the built-in avoids
+#             the need for a separate roblox.yml custom stdlib definition and
+#             prevents false-positive "undefined global" warnings.
 #
 # Lint rules (severity: "deny" | "warn" | "allow"):
 #   unused_variable  – dead code; DRY principle (remove or use the symbol)
@@ -14,7 +16,7 @@
 #   empty_if         – clean code; empty branch bodies serve no purpose
 #   must_use         – clean code; ignoring an annotated return value is a bug
 
-std = "lua51+roblox"
+std = "roblox"
 
 [lints]
 unused_variable = "warn"
