@@ -1,0 +1,11 @@
+[package]
+name     = "goblinsan/game-01"
+version  = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm    = "server"
+authors  = ["goblinsan"]
+
+[dependencies]
+# Uncomment once packages are published to the Wally registry:
+# Core = "goblinsan/core@^0.1.0"
+# UI   = "goblinsan/ui@^0.1.0"

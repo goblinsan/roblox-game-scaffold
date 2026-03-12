@@ -1,0 +1,10 @@
+[package]
+name        = "goblinsan/core"
+version     = "0.1.0"
+registry    = "https://github.com/UpliftGames/wally-index"
+realm       = "shared"
+description = "Reusable core systems for Roblox games (player lifecycle, DataStore, remotes, rounds, config)."
+license     = "MIT"
+authors     = ["goblinsan"]
+
+[dependencies]
