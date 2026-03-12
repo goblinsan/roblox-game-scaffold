@@ -1,0 +1,25 @@
+# Root Wally manifest.
+# Individual packages and games declare their own wally.toml files for
+# per-scope dependency management.  This root manifest is intentionally
+# kept lean — it only carries shared dev-tooling dependencies that every
+# workspace member needs.
+#
+# Lockfile policy:
+#   - wally.lock files are committed alongside wally.toml files so that
+#     `wally install --locked` in CI always resolves the same set of
+#     packages as the developer who last updated dependencies.
+#   - Dependency bumps are done as a dedicated commit/PR so the lockfile
+#     diff is easy to review.
+#   - Run `wally update` (or edit the version constraint manually) then
+#     commit both wally.toml and the regenerated wally.lock together.
+
+[package]
+name    = "goblinsan/roblox-game-scaffold"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm   = "shared"
+
+[dev-dependencies]
+# TestEZ is the standard Roblox unit-testing framework.
+# Pinned to a specific minor so CI is deterministic.
+TestEZ = "roblox/testez@0.4.1"

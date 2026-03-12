@@ -1,0 +1,51 @@
+# CI smoke test: Wally install + Rojo build
+#
+# Runs on every push to main and on every pull request to catch broken
+# scaffold changes before they land.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Wally install + Rojo build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Install rojo and wally via aftman using versions pinned in aftman.toml
+      - name: Set up aftman toolchain
+        uses: ok-nick/setup-aftman@v0.4.2
+
+      # ── game-01 ──────────────────────────────────────────────────────────
+
+      - name: Wally install (game-01)
+        working-directory: games/game-01
+        run: wally install
+
+      - name: Rojo build (game-01)
+        working-directory: games/game-01
+        run: rojo build default.project.json --output /tmp/game-01.rbxlx
+
+      # ── game-02 ──────────────────────────────────────────────────────────
+
+      - name: Wally install (game-02)
+        working-directory: games/game-02
+        run: wally install
+
+      - name: Rojo build (game-02)
+        working-directory: games/game-02
+        run: rojo build default.project.json --output /tmp/game-02.rbxlx
+
+      # ── scaffold root (packages) ──────────────────────────────────────────
+
+      - name: Rojo build (scaffold root)
+        run: rojo build default.project.json --output /tmp/scaffold.rbxlx
