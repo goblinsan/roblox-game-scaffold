@@ -33,7 +33,11 @@ jobs:
 
       - name: Rojo build (game-01)
         working-directory: games/game-01
-        run: rojo build default.project.json --output /tmp/game-01.rbxlx
+        # Ensure Packages/ exists so Rojo can resolve $path even when wally
+        # installs zero packages (all deps commented out in wally.toml).
+        run: |
+          mkdir -p Packages
+          rojo build default.project.json --output /tmp/game-01.rbxlx
 
       # ── game-02 ──────────────────────────────────────────────────────────
 
@@ -43,9 +47,13 @@ jobs:
 
       - name: Rojo build (game-02)
         working-directory: games/game-02
-        run: rojo build default.project.json --output /tmp/game-02.rbxlx
+        run: |
+          mkdir -p Packages
+          rojo build default.project.json --output /tmp/game-02.rbxlx
 
       # ── scaffold root (packages) ──────────────────────────────────────────
 
       - name: Rojo build (scaffold root)
-        run: rojo build default.project.json --output /tmp/scaffold.rbxlx
+        run: |
+          mkdir -p Packages
+          rojo build default.project.json --output /tmp/scaffold.rbxlx
