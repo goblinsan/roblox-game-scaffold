@@ -1,0 +1,23 @@
+# Selene – Luau static analyser configuration
+#
+# Enforces clean-code and DRY principles across all .lua/.luau source files.
+# Run  `selene .` to analyse the whole project.
+#
+# std:
+#   lua51   – baseline Lua 5.1 globals (the Luau runtime is Lua 5.1-compatible)
+#   roblox  – Roblox-engine globals defined in roblox.yml (prevents false
+#             positives for game, workspace, Instance, etc.)
+#
+# Lint rules (severity: "deny" | "warn" | "allow"):
+#   unused_variable  – dead code; DRY principle (remove or use the symbol)
+#   shadowing        – clean code; reusing a name hides the outer binding
+#   empty_if         – clean code; empty branch bodies serve no purpose
+#   must_use         – clean code; ignoring an annotated return value is a bug
+
+std = "lua51+roblox"
+
+[lints]
+unused_variable = "warn"
+shadowing       = "warn"
+empty_if        = "warn"
+must_use        = "warn"
