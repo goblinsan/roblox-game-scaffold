@@ -7,11 +7,7 @@ local TableUtil = {}
 
 --- Return a shallow copy of t.
 function TableUtil.copy(t)
-    local result = {}
-    for k, v in t do
-        result[k] = v
-    end
-    return result
+    return table.clone(t)
 end
 
 --- Deep-copy t, recursing into nested tables.
